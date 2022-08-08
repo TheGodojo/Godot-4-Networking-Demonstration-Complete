@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://bxv0sdh81ec2f"]
+
+[ext_resource type="Script" path="res://player_character/player_character.gd" id="1_u4q1x"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_si15v"]
+albedo_color = Color(0.164706, 0.482353, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_kjdfc"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_aiefh"]
+
+[node name="PlayerCharacter" type="MeshInstance3D"]
+material_override = SubResource("StandardMaterial3D_si15v")
+mesh = SubResource("SphereMesh_kjdfc")
+script = ExtResource("1_u4q1x")
+
+[node name="Message" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+billboard = 1
+text = "Chat Message"
+font_size = 128
+
+[node name="Name" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+billboard = 1
+modulate = Color(0, 0, 0, 1)
+font_size = 64
+
+[node name="MouseClickArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MouseClickArea"]
+shape = SubResource("SphereShape3D_aiefh")
+
+[connection signal="input_event" from="MouseClickArea" to="." method="_on_mouse_click_area_input_event"]
