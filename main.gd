@@ -6,31 +6,34 @@ const PORT = 9999
 const ADDRESS = "127.0.0.1"
 
 var connected_peer_ids = []
-var local_player_character
+var local_player_character : Node3D
 
 func _on_host_pressed():
-	$NetworkInfo/NetworkSideDisplay.text = "Server"
-	$Menu.visible = false
 	multiplayer_peer.create_server(PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
+	
+	#UI Stuff
+	$NetworkInfo/NetworkSideDisplay.text = "Server"
+	$Menu.visible = false
 	$NetworkInfo/UniquePeerID.text = str(multiplayer.get_unique_id())
 	
 	add_player_character(1)
 	
-	multiplayer_peer.peer_connected.connect(
-		func(new_peer_id):
-			await get_tree().create_timer(1).timeout
-			rpc("add_newly_connected_player_character", new_peer_id)
-			rpc_id(new_peer_id, "add_previously_connected_player_characters", connected_peer_ids)
-			add_player_character(new_peer_id)
-	)
+	multiplayer_peer.peer_connected.connect(_on_peer_connected)
 
+func _on_peer_connected(new_peer_id : int):
+	await get_tree().create_timer(1).timeout
+	rpc("add_newly_connected_player_character", new_peer_id)
+	rpc_id(new_peer_id, "add_previously_connected_player_characters", connected_peer_ids)
+	add_player_character(new_peer_id)
 
 func _on_join_pressed():
-	$NetworkInfo/NetworkSideDisplay.text = "Client"
-	$Menu.visible = false
 	multiplayer_peer.create_client(ADDRESS, PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
+	
+	#UI Stuff
+	$NetworkInfo/NetworkSideDisplay.text = "Client"
+	$Menu.visible = false
 	$NetworkInfo/UniquePeerID.text = str(multiplayer.get_unique_id())
 
 func add_player_character(peer_id):
@@ -38,6 +41,7 @@ func add_player_character(peer_id):
 	var player_character = preload("res://player_character/player_character.tscn").instantiate()
 	player_character.set_multiplayer_authority(peer_id)
 	add_child(player_character)
+	
 	if peer_id == multiplayer.get_unique_id():
 		local_player_character = player_character
 
