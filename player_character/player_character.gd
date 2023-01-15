@@ -1,6 +1,6 @@
 extends MeshInstance3D
 
-func _ready():
+func _enter_tree():
 	name = str(get_multiplayer_authority())
 	$Name.text = str(name)
 

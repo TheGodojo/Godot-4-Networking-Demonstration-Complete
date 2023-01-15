@@ -1,12 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://7qrebi2gqtno"]
+[gd_scene load_steps=2 format=3 uid="uid://7qrebi2gqtno"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_rj0nf"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gjiah"]
-albedo_color = Color(0.380392, 0.639216, 0.317647, 1)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_o0b61"]
-size = Vector2(32, 32)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_rj0nf")
@@ -19,11 +13,8 @@ directional_shadow_max_distance = 250.0
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 16, 16)
 
-[node name="Floor" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_gjiah")
-mesh = SubResource("PlaneMesh_o0b61")
-
 [node name="NetworkInfo" type="VBoxContainer" parent="."]
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -58.0
@@ -32,21 +23,17 @@ offset_bottom = 56.0
 grow_horizontal = 2
 
 [node name="NetworkSideDisplay" type="Label" parent="NetworkInfo"]
-offset_right = 116.0
-offset_bottom = 26.0
-grow_horizontal = 2
+layout_mode = 2
 text = "Network Side"
 horizontal_alignment = 1
 
 [node name="UniquePeerID" type="Label" parent="NetworkInfo"]
-offset_top = 30.0
-offset_right = 116.0
-offset_bottom = 56.0
-grow_horizontal = 2
+layout_mode = 2
 text = "Unique Peer ID"
 horizontal_alignment = 1
 
 [node name="Menu" type="VBoxContainer" parent="."]
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -59,17 +46,15 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Host" type="Button" parent="Menu"]
-offset_right = 79.0
-offset_bottom = 31.0
+layout_mode = 2
 text = "Host"
 
 [node name="Join" type="Button" parent="Menu"]
-offset_top = 35.0
-offset_right = 79.0
-offset_bottom = 66.0
+layout_mode = 2
 text = "Join"
 
 [node name="MessageInput" type="LineEdit" parent="."]
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
